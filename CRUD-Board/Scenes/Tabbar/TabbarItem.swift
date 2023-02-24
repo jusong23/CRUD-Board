@@ -7,6 +7,8 @@
 
 import UIKit
 
+// ✅ feed일때, profile일때 리턴되는 title, icon, viewcontroller를 분기처리
+
 enum TabBarItem: CaseIterable {
     case feed
     case profile

@@ -10,8 +10,10 @@ import UIKit
 final class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // TabbarItem 반복하기 좋은 팁 ✅
+        
+        print(Icon.allCases)
+        
+        // ✅ TabbarItem 반복하기 좋은 팁 allCases ~ CaseIterable
         let tabBarViewControllers: [UIViewController] = TabBarItem.allCases
             .map { tabCase in
                 let viewController = tabCase.viewController

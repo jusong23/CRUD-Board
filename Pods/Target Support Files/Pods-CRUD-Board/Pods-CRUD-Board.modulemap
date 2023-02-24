@@ -1,0 +1,6 @@
+framework module Pods_CRUD_Board {
+  umbrella header "Pods-CRUD-Board-umbrella.h"
+
+  export *
+  module * { export * }
+}

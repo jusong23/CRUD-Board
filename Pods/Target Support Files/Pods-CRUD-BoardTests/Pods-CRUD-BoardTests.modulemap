@@ -1,0 +1,6 @@
+framework module Pods_CRUD_BoardTests {
+  umbrella header "Pods-CRUD-BoardTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
