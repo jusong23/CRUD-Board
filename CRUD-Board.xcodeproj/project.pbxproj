@@ -29,6 +29,9 @@
 		75D9B84829A8423800661387 /* WritePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D9B84629A8423800661387 /* WritePresenter.swift */; };
 		75D9B85029A8490100661387 /* TweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D9B84E29A8490100661387 /* TweetViewController.swift */; };
 		75D9B85129A8490100661387 /* TweetPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D9B84F29A8490100661387 /* TweetPresenter.swift */; };
+		75D9B8B629A884D800661387 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D9B8B429A884D800661387 /* NetworkService.swift */; };
+		75D9B8B729A884D800661387 /* SimpleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D9B8B529A884D800661387 /* SimpleError.swift */; };
+		75D9B8B929A8857E00661387 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D9B8B829A8857E00661387 /* List.swift */; };
 		B9F6B029CC96E1B5F218ABD6 /* Pods_CRUD_Board_CRUD_BoardUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57BFA439029AAA08E16DABEE /* Pods_CRUD_Board_CRUD_BoardUITests.framework */; };
 		F1E4E200201F5323B40894F6 /* Pods_CRUD_BoardTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B49619A962AEA566684EE55 /* Pods_CRUD_BoardTests.framework */; };
 /* End PBXBuildFile section */
@@ -82,6 +85,9 @@
 		75D9B84629A8423800661387 /* WritePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePresenter.swift; sourceTree = "<group>"; };
 		75D9B84E29A8490100661387 /* TweetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetViewController.swift; sourceTree = "<group>"; };
 		75D9B84F29A8490100661387 /* TweetPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetPresenter.swift; sourceTree = "<group>"; };
+		75D9B8B429A884D800661387 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		75D9B8B529A884D800661387 /* SimpleError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleError.swift; sourceTree = "<group>"; };
+		75D9B8B829A8857E00661387 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		B50486CEBA11A5C52C9D9DCA /* Pods-CRUD-Board-CRUD-BoardUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CRUD-Board-CRUD-BoardUITests.release.xcconfig"; path = "Target Support Files/Pods-CRUD-Board-CRUD-BoardUITests/Pods-CRUD-Board-CRUD-BoardUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C98DACAB11573DA9EAD8126A /* Pods_CRUD_Board.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CRUD_Board.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -152,6 +158,7 @@
 			children = (
 				75D9B7F729A6FCCD00661387 /* AppDelegate.swift */,
 				75D9B7F929A6FCCD00661387 /* SceneDelegate.swift */,
+				75D9B8B329A884D800661387 /* Services */,
 				75D9B83229A6FF2300661387 /* Scenes */,
 				75D9B82F29A6FDEF00661387 /* Managers */,
 				75D9B82A29A6FD9100661387 /* Models */,
@@ -184,6 +191,7 @@
 			children = (
 				75D9B82B29A6FD9100661387 /* Tweet.swift */,
 				75D9B82C29A6FD9100661387 /* User.swift */,
+				75D9B8B829A8857E00661387 /* List.swift */,
 			);
 			name = Models;
 			path = "../../../Downloads/part5.-advanced--전체- (1)/Ch8_트위터/Tweet/Tweet/Models";
@@ -246,6 +254,16 @@
 			);
 			name = Tweet;
 			path = "../../../../Downloads/part5.-advanced--전체- (1)/Ch8_트위터/Tweet/Tweet/Scenes/Tweet";
+			sourceTree = "<group>";
+		};
+		75D9B8B329A884D800661387 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				75D9B8B429A884D800661387 /* NetworkService.swift */,
+				75D9B8B529A884D800661387 /* SimpleError.swift */,
+			);
+			name = Services;
+			path = "../../../Downloads/MVP_Example-main/MVP_Example/Services";
 			sourceTree = "<group>";
 		};
 		D8FC7BD247206734738495D4 /* Pods */ = {
@@ -506,6 +524,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75D9B7FC29A6FCCD00661387 /* TabbarController.swift in Sources */,
+				75D9B8B729A884D800661387 /* SimpleError.swift in Sources */,
 				75D9B7F829A6FCCD00661387 /* AppDelegate.swift in Sources */,
 				75D9B83729A702AE00661387 /* FeedPresenter.swift in Sources */,
 				75D9B83129A6FDEF00661387 /* UserDefaultsManager.swift in Sources */,
@@ -515,11 +534,13 @@
 				75D9B84829A8423800661387 /* WritePresenter.swift in Sources */,
 				75D9B85129A8490100661387 /* TweetPresenter.swift in Sources */,
 				75D9B7FA29A6FCCD00661387 /* SceneDelegate.swift in Sources */,
+				75D9B8B629A884D800661387 /* NetworkService.swift in Sources */,
 				75D9B82E29A6FD9100661387 /* User.swift in Sources */,
 				75D9B82D29A6FD9100661387 /* Tweet.swift in Sources */,
 				75D9B83529A7029700661387 /* FeedViewController.swift in Sources */,
 				75D9B83C29A708E400661387 /* FeedTableViewCell.swift in Sources */,
 				75D9B83E29A709DD00661387 /* Icon.swift in Sources */,
+				75D9B8B929A8857E00661387 /* List.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

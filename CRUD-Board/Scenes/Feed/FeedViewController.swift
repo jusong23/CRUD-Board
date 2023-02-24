@@ -7,6 +7,8 @@
 import Floaty
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 final class FeedViewController: UIViewController {
 
@@ -25,12 +27,13 @@ final class FeedViewController: UIViewController {
 
     // 1. ViewController 연결
     private lazy var presenter = FeedPresenter(viewController: self)
+    private var listElement = BehaviorSubject<[ListElement]>(value: [])
 
     // 2. TableView 생성 및 addSubView
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.delegate = presenter
-        tableView.dataSource = presenter
+        tableView.delegate = self
+        tableView.dataSource = self
 
         tableView.register(
             FeedTableViewCell.self,
@@ -47,24 +50,26 @@ final class FeedViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        presenter.callAPI()
         presenter.viewWillAppear()
     }
 
+}
 
+extension FeedViewController: FeedProtocol {
+    
+    func callAPI_vc(_ listElement: [ListElement]) {
+        self.listElement.onNext(listElement)
+        print("***")
+        print(listElement)
+        print("***")
+    }
+    
     func reloadTableView() {
         tableView.reloadData()
     }
 
-    func moveToWriteViewController() {
-        let writeViewController = UINavigationController(rootViewController: WriteViewController())
-        writeViewController.modalPresentationStyle = .fullScreen
-
-        present(writeViewController, animated: true)
-    }
-}
-
-extension FeedViewController: FeedProtocol {
+    
     func setupView() {
         navigationItem.title = "Feed"
 
@@ -82,5 +87,43 @@ extension FeedViewController: FeedProtocol {
     func moveToTweetViewController(with tweet: Tweet) {
         let tweetViewController = TweetViewController(tweet: tweet)
         navigationController?.pushViewController(tweetViewController, animated: true)
+    }
+    
+    func moveToWriteViewController() {
+        let writeViewController = UINavigationController(rootViewController: WriteViewController())
+        writeViewController.modalPresentationStyle = .fullScreen
+
+        present(writeViewController, animated: true)
+    }
+}
+
+extension FeedViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        tweets.count
+        try! listElement.value().count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: FeedTableViewCell.identifier,
+            for: indexPath
+        ) as? FeedTableViewCell
+
+        let list_Element = try! self.listElement.value()[indexPath.row]
+        cell!.listElement.onNext(list_Element)
+                
+//        print(try! listElement.value()[indexPath.row].title)
+        
+//        let tweet = tweets[indexPath.row]
+//        cell?.setup(tweet: tweet)
+
+        return cell ?? UITableViewCell()
+    }
+}
+
+extension FeedViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let tweet = tweets[indexPath.row]
+//        viewController?.moveToTweetViewController(with: tweet)
     }
 }

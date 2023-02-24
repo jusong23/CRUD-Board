@@ -6,17 +6,23 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 protocol FeedProtocol: AnyObject {
     func setupView()
     func reloadTableView()
     func moveToTweetViewController(with tweet: Tweet)
     func moveToWriteViewController()
+    func callAPI_vc(_ listElement: [ListElement])
 }
 
 final class FeedPresenter: NSObject {
     private weak var viewController: FeedProtocol?
     private let userDefaultsManager: UserDefaultsManagerProtcol
+    private let disposeBag = DisposeBag()
+    private let networkService = NetworkService()
+//    private var listElement = BehaviorSubject<[ListElement]>(value: [])
 
     private var tweets: [Tweet] = []
 
@@ -37,32 +43,25 @@ final class FeedPresenter: NSObject {
         viewController?.reloadTableView()
     }
 
+    func callAPI() {
+        networkService.getBookList()
+            .subscribe(on: ConcurrentDispatchQueueScheduler(queue: .global()))
+            .observe(on: MainScheduler.instance)
+            .subscribe { event in
+            switch event {
+            case .next(let (listElement)):
+                self.viewController?.callAPI_vc(listElement)
+                self.viewController?.reloadTableView()
+            case .error(let error):
+                print("error: \(error), thread: \(Thread.isMainThread)")
+            case .completed:
+                print("completed")
+            }
+        }.disposed(by: disposeBag)
+    }
+    
     func didTapWriteButton() {
         viewController?.moveToWriteViewController()
     }
 }
 
-extension FeedPresenter: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        tweets.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: FeedTableViewCell.identifier,
-            for: indexPath
-        ) as? FeedTableViewCell
-
-        let tweet = tweets[indexPath.row]
-        cell?.setup(tweet: tweet)
-
-        return cell ?? UITableViewCell()
-    }
-}
-
-extension FeedPresenter: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let tweet = tweets[indexPath.row]
-        viewController?.moveToTweetViewController(with: tweet)
-    }
-}

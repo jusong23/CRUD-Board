@@ -7,9 +7,12 @@
 
 import SnapKit
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class FeedTableViewCell: UITableViewCell {
     static let identifier = "FeedTableViewCell"
+    var listElement = PublishSubject<ListElement>()
 
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -72,6 +75,11 @@ final class FeedTableViewCell: UITableViewCell {
 
         setupLayout()
 
+        // tweet 대신 onNext
+        
+        listElement.subscribe(onNext: { ListElement in
+            print(ListElement)
+        })
         writterNameLabel.text = tweet.user.name
         writterAccountLabel.text = "@\(tweet.user.account)"
         contentsLabel.text = tweet.contents
